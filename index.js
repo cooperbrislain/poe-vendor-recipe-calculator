@@ -13,8 +13,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(bodyParser.json());
 
+app.use(express.static('client'));
+
 const routes = require('./routes');
 app.use(routes);
-
-app.listen(3001, () => console.log(`Server started on PORT: 3001`));
 
