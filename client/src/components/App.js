@@ -1,9 +1,13 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import UserInfo from './UserInfo';
+import { Container, Navbar } from 'react-bootstrap';
 
 export default ({ children }) => {
     return (
         <div>
+            <Navbar>
+                <UserInfo />
+            </Navbar>
             <Container>
                 <main>
                     {children}

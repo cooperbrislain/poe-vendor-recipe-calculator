@@ -10,4 +10,3 @@ router.use('/api', apiRoutes);
 
 module.exports = router;
 
-app.listen(3001, () => console.log(`Server started on PORT: 3001`));

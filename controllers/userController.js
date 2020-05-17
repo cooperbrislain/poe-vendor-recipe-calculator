@@ -11,7 +11,7 @@ module.exports = {
         }
     },
     getChars: async (req, res) => {
-        const { accountName } = req.params;
+        const { accountName } = req.query;
         const { token } = req.query;
         const league = 'Delirium';
         const url = 'https://pathofexile.com/character-window/get-characters';
