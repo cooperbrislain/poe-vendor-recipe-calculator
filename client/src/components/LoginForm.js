@@ -1,46 +1,49 @@
 import React, { useState } from 'react';
-import { connect } from "react-redux";
-import {compose} from "redux";
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { reduxForm, Field } from 'redux-form';
+// import ReduxFormControl from "react-redux-bootstrap-form";
+import 'bootstrap/dist/css/bootstrap.min.css';
 import { Form, Button } from 'react-bootstrap';
+import ReduxFormControl from "./ReduxFormControl";
 
 import { signIn } from './../actions'
 
-
 const LoginForm = props => {
-    console.log('PROPS',props);
-    const [ accountName, setAccountName ] = useState('');
-    const [ token, setToken ] = useState('');
-    const { signIn } = props;
+    const onSubmit = formProps => props.signIn(formProps, () => props.history.push('/'));
     const { handleSubmit } = props;
-    console.log(signIn, handleSubmit);
+    const [ accountName, setAccountName ] = useState(props.state.auth.accountName || '');
+    const [ token, setToken ] = useState(props.state.auth.token || '');
     return (
-        <Form>
+        <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group controlId="formAccount">
                 <Form.Label>PoE Account Name</Form.Label>
-                <Form.Control
+                <Field
+                    name="accountName"
                     type="text"
-                    placeholder="Your username for your PoE account"
-                    onChange={ e => setAccountName(e.target.value) }
                     value={accountName}
+                    validate=""
+                    placeholder="Your username for your PoE account"
+                    component={ReduxFormControl}
                 />
             </Form.Group>
 
             <Form.Group controlId="formToken">
                 <Form.Label>Auth Token</Form.Label>
-                <Form.Control
+                <Field
+                    name="token"
                     type="text"
-                    onChange={ e => setToken(e.target.value) }
                     value={token}
+                    validate=""
+                    placeholder=""
+                    component={ReduxFormControl}
                 />
                 <Form.Text className="text-muted">
                     Found in POESESSID Cookie.
                 </Form.Text>
             </Form.Group>
 
-            <Button variant="primary" type="button"
-                onClick={ signIn }>
-                Submit
-            </Button>
+            <Button variant="primary" type="submit">Submit</Button>
         </Form>
     );
 };
@@ -48,4 +51,6 @@ const LoginForm = props => {
 const mapStateToProps = state => ({ state });
 
 export default compose(
-    connect(mapStateToProps, { signIn }))(LoginForm);
+    connect(mapStateToProps, { signIn }),
+    reduxForm({ form: 'signin' })
+)(LoginForm);

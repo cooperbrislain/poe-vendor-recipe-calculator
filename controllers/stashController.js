@@ -22,4 +22,13 @@ module.exports = {
             res.send(err);
         });
     },
+    getStash: async (req, res) => {
+        const {accountName} = req.params;
+        const league = 'Delirium';
+        const url = 'pathofexile.com/character-window/get-stash-items';
+
+    },
+    getStashItems: async (req, res) => {
+
+    }
 };
