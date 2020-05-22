@@ -25,18 +25,6 @@ const store = createStore(reducers,
 
 ReactDOM.render(
 <Provider store={store}>
-    <Router>
-        <App>
-            <Card>
-                <Card.Header>
-                    Login
-                </Card.Header>
-                <Card.Body>
-                    <LoginForm />
-                </Card.Body>
-            </Card>
-            <CharacterList />
-        </App>
-    </Router>
+    <App />
 </Provider>
     ,document.getElementById('root'));

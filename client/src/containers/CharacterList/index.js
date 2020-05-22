@@ -7,15 +7,18 @@ import { Container, Form, Row, Col, Button } from 'react-bootstrap';
 
 class CharacterList extends Component {
     componentDidMount = () => this.props.getChars();
-
     render() {
+        const { user } = this.props.state;
+        console.log('USER', user);
+        console.log('CHARS', user.chars);
         return (
-            <Container>
-                Character List
-            </Container>
+            <ul>
+                { user.chars.map((char, i) => <li key={i}>{char.name}</li>) }
+                {/*{ user.chars.map((char, i) => <li key={i}>{char.name}</li>) }*/}
+            </ul>
         )
     }
 }
 
-const mapStateToProps = state => ({ state});
+const mapStateToProps = state => ({ state });
 export default compose(connect(mapStateToProps, { getChars }))(CharacterList)

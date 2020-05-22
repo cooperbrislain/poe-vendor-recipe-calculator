@@ -4,7 +4,7 @@ import { compose } from 'redux';
 import { reduxForm, Field } from 'redux-form';
 // import ReduxFormControl from "react-redux-bootstrap-form";
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Form, Button } from 'react-bootstrap';
+import {Form, Button, Card, Container} from 'react-bootstrap';
 import ReduxFormControl from "./ReduxFormControl";
 
 import { signIn } from './../actions'
@@ -42,7 +42,6 @@ const LoginForm = props => {
                     Found in POESESSID Cookie.
                 </Form.Text>
             </Form.Group>
-
             <Button variant="primary" type="submit">Submit</Button>
         </Form>
     );

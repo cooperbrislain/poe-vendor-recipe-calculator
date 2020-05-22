@@ -1,18 +1,45 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import UserInfo from './UserInfo';
-import { Container, Navbar } from 'react-bootstrap';
+import { Card, Container, Navbar } from 'react-bootstrap';
+import LoginForm from './LoginForm';
+import CharacterList from '../containers/CharacterList';
+import Stash from '../containers/Stash';
+import InventoryList from '../containers/InventoryList';
+import Header from './Header.js';
 
-export default ({ children }) => {
+export default ({ props, children }) => {
+    console.log('APP',props);
     return (
-        <div>
-            <Navbar>
-                <UserInfo />
-            </Navbar>
-            <Container>
-                <main>
-                    {children}
-                </main>
-            </Container>
-        </div>
+        <>
+            <Header />
+            <Router>
+                <Route exact path="/" render={ props => (
+                    1?
+                        <>
+                            Welcome
+                        </>
+                    :
+                        <>
+                            <Container>
+                                <main>
+                                    <Card>
+                                        <Card.Header>
+                                            Login
+                                        </Card.Header>
+                                        <Card.Body>
+                                            <LoginForm />
+                                        </Card.Body>
+                                    </Card>
+                                </main>
+                            </Container>
+                        </>
+                )} />
+                <Route exact path="/stash" component={Stash} />
+                <Route exact path="/chars" component={CharacterList} />
+                <Route exact path="/inv" component={InventoryList} />
+            </Router>
+        </>
     );
 };
