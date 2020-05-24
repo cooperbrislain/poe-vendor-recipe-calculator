@@ -27,6 +27,10 @@ class SearchControls extends Component {
         console.log('ONSUBMIT', formProps);
     };
 
+    updateSearchString = (e) => {
+        console.log('SEARCHSTRING', e.target.value);
+    };
+
     render() {
         const { inv, form } = this.props.state;
         const { filterCategory, search } = inv;
@@ -80,7 +84,7 @@ class SearchControls extends Component {
                         <Field
                             name="level_max"
                             type="range"
-                            value={search.level_max||100}
+                            value={search.params.level_max||100}
                             onChange={this.adjustLevelMax}
                             component={ReduxFormControl} />
                     </Form.Group>

@@ -13,7 +13,9 @@ const INITIAL_STATE = {
     errorMessage: '',
     search: {
         sort: 'alpha',
-        filters: ['all']
+        filters: ['all'],
+        sorts: ['alpha'],
+        params: { }
     }
 };
 
