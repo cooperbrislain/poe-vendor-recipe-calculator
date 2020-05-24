@@ -13,7 +13,7 @@ class InventoryList extends Component {
     render() {
         const { inv } = this.props.state;
         console.log('INVLIST', inv);
-        inv.items.sort((a, b) => (a.typeLine > b.typeLine) ? 1 : -1);
+        // inv.items.sort((a, b) => (a.typeLine > b.typeLine) ? 1 : -1);
         return (
             <>
                 <Navbar>
@@ -25,6 +25,8 @@ class InventoryList extends Component {
                         <tr>
                             <th>Icon</th>
                             <th>Name</th>
+                            <th>Category</th>
+                            <th>Subcat</th>
                             <th>Level</th>
                             <th>Where</th>
                         </tr>
@@ -34,10 +36,15 @@ class InventoryList extends Component {
                         <tr key={i}>
                             <td><img src={item.icon} /></td>
                             <td>{item.name} {item.typeLine}</td>
+                            <td>{item.category}</td>
+                            <td>{item.subcat}</td>
                             <td>{item.ilvl}</td>
-                            <td>{item.inventoryId}</td>
+                            <td>
+                                {item.location.character||item.location.name}<br/>
+                                {item.inventoryId}
+                            </td>
                         </tr>
-                    ))}
+                    )) }
                     </tbody>
                 </Table>
             </>

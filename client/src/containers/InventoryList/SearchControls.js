@@ -13,7 +13,6 @@ class SearchControls extends Component {
     render() {
         const { stash, inv } = this.props.state;
 
-
         return (
             <Jumbotron>
                 <Form>
@@ -25,10 +24,14 @@ class SearchControls extends Component {
                             component={ReduxFormControl}
                             as="select"
                         >
-                            <option value="gem">Gems</option>
-                            <option value="weapon">Weapons</option>
-                            <option value="armor">Armor</option>
-                            <option value="other">Other</option>
+                            {
+                                Object.keys(inv.categories).map((category, v) => {
+                                    console.log(category);
+                                    return (
+                                        <option value={category}>{category}</option>
+                                    );
+                                })
+                            }
                         </Field>
                     </Form.Group>
                     <Form.Group controlId="formCategory">

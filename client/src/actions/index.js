@@ -50,9 +50,9 @@ export const getAllInv = (formProps, callback) => async dispatch => {
     console.log('ACTIONS.INV_LIST', formProps);
     try {
         const response = await axios.get(url, { headers, params });
-        const { items } = response.data;
+        const { items, categories } = response.data;
         console.log('ALL INVENTORY', items);
-        dispatch({ type: ACTIONS.INV_LIST, payload: { items } });
+        dispatch({ type: ACTIONS.INV_LIST, payload: { items, categories } });
     } catch (e) {
         dispatch({ type: ACTIONS.CHAR_ERROR, payload: e });
     }
