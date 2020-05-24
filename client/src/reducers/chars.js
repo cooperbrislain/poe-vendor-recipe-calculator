@@ -9,6 +9,8 @@ export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case ACTIONS.CHAR_LIST:
             return {...state, ...action.payload };
+        case ACTIONS.CHAR_INV:
+            return {...state, ...action.payload };
         case ACTIONS.CHAR_ERROR:
             return {...state, errorMessage: action.payload };
         default:

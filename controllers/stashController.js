@@ -1,23 +1,21 @@
 const axios = require('axios');
-
-const POEAPIURL = 'https://pathofexile.com/character-window/get-stash-items';
+const CONFIG = require('../config');
 
 module.exports = {
     getStashTabs: async (req, res) => {
         const { accountName } = req.params;
+        const { token } = req.headers;
         const league = 'Delirium';
-        const url = `${POEAPIURL}`;
+        const url = `${CONFIG.API_URL}/character-window/get-stash-items`;
         const headers = { Cookie: `POESESSID=${token}` };
         const tabIndex = 0;
         const tabs = 1;
         const params = { accountName, league, tabIndex, tabs };
         axios.get(url, { headers, params })
             .then(response => {
-                // console.log(response);
                 res.json(response.data);
             })
             .catch(err => {
-                // console.log(err);
                 res.send(err);
             });
     },
@@ -27,18 +25,11 @@ module.exports = {
         const league = 'Delirium';
         const { tabIndex } = req.query || req.params;
         const tabs = 1;
-        const url = `${POEAPIURL}`;
+        const url = `${CONFIG.API_URL}/character-window/get-stash-items`;
         const headers = { Cookie: `POESESSID=${token}` };
         const params = { accountName, league, tabIndex, tabs };
-        axios.get(url, { headers, params })
-            .then(response => {
-                console.log(response.data);
-                res.json(response.data);
-            })
-            .catch(err => {
-                console.log(err);
-                res.send(err);
-            });
+        let response = await axios.get(url, { headers, params });
+        const { numTabs } = response.data;
     },
     getStash: async (req, res) => {
         const {accountName} = req.params;
@@ -50,18 +41,20 @@ module.exports = {
         const { accountName } = req.query;
         const { token } = req.headers;
         const league = 'Delirium';
-        const tabIndex = req.query.tabIndex || 0;
-        const url = `${POEAPIURL}`;
+        const url = `${CONFIG.API_URL}/character-window/get-stash-items`;
         const headers = { Cookie: `POESESSID=${token}` };
-        const params = { accountName, league, tabIndex };
+        const params = { accountName, league };
         console.log('GETSTASHINV', params);
-        axios.get(url, { headers, params })
-            .then(response => {
-                res.json(response.data);
-            })
-            .catch(err => {
-                console.log(err);
-                res.send(err);
-            });
+        let response = await axios.get(url, { headers, params });
+        const { numTabs } = response.data;
+        let everything = [];
+        for (let i=0; i<numTabs; i++) {
+            params.tabIndex = i;
+            let response = await axios.get(url, { headers, params });
+            const { items } = response.data;
+            everything = [...everything, ...items];
+        }
+        console.log(everything);
+        await res.json({ items: everything });
     }
 };

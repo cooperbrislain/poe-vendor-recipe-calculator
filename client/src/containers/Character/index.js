@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { getStashTab } from '../../actions';
-import { Navbar, Nav } from 'react-bootstrap';
+import { getCharInv, getChar } from '../../actions';
+import { Card } from 'react-bootstrap';
 // import styles from './index.css';
 
 class StashTab extends Component {
-    componentDidMount = () => this.props.getStashTab(this.props.tabIndex);
+    componentDidMount = () => this.props.getChar(this.props.charName);
     render() {
         const { stash } = this.props.state;
         const { tabIndex } = this.props;
