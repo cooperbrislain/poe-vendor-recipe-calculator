@@ -15,6 +15,9 @@ class SearchControls extends Component {
         console.log('FILTER_CATEGORY', e.target.value);
     };
 
+    adjustLevelMin = (e) => console.log('ADJUST LEVEL MIN', e.target.value);
+    adjustLevelMax = (e) => console.log('ADJUST LEVEL MAX', e.target.value);
+
     selectSort = (e) => {
         console.log('FILTER_SORT', e.target.value);
     };
@@ -25,14 +28,28 @@ class SearchControls extends Component {
     };
 
     render() {
-        const { inv } = this.props.state;
+        const { inv, form } = this.props.state;
         const { filterCategory, search } = inv;
         const { handleSubmit } = this.props;
+        const fields = form.invsearch? form.invsearch.values || 0 : {};
+
         // console.log('CATEGORIES', inv.categories);
         // console.log('CATEGORY', inv.category);
         return (
             <Jumbotron>
                 <Form onSubmit={handleSubmit(this.onSubmit)}>
+
+                    <Form.Group controlId="formCategory">
+                        <Form.Label>Search</Form.Label>
+                        <Field
+                            name="string"
+                            type="text"
+                            value={search.string}
+                            component={ReduxFormControl}
+                            onChange={this.updateSearchString}
+                        />
+                    </Form.Group>
+
                     <Form.Group controlId="formCategory">
                         <Form.Label>Category</Form.Label>
                         <Field
@@ -41,7 +58,6 @@ class SearchControls extends Component {
                             as="select"
                             value={search.category}
                             component={ReduxFormControl}
-                            onChange={this.selectFilterCategory}
                         >
                             <option value='all'>All</option>
                             { Object.keys(inv.categories).map((category, i) =>
@@ -49,6 +65,26 @@ class SearchControls extends Component {
                             ) }
                         </Field>
                     </Form.Group>
+
+                    <Form.Group controlId="formLevelRange">
+                        <Form.Label>Level Min</Form.Label>
+                        <Form.Text>{fields.level_min}</Form.Text>
+                        <Field
+                            name="level_min"
+                            type="range"
+                            value={search.level_min||0}
+                            onChange={this.adjustLevelMin}
+                            component={ReduxFormControl} />
+                        <Form.Label>Level Max</Form.Label>
+                        <Form.Text>{fields.level_max}</Form.Text>
+                        <Field
+                            name="level_max"
+                            type="range"
+                            value={search.level_max||100}
+                            onChange={this.adjustLevelMax}
+                            component={ReduxFormControl} />
+                    </Form.Group>
+
                     <Form.Group controlId="formCategory">
                         <Form.Label>Sort</Form.Label>
                         <Field
@@ -63,6 +99,7 @@ class SearchControls extends Component {
                             <option value="alpha">Alphabetical</option>
                         </Field>
                     </Form.Group>
+
                     <Button type="submit" variant="primary">Search</Button>
                 </Form>
             </Jumbotron>

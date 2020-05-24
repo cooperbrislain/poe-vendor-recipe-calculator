@@ -99,8 +99,9 @@ export const getStashInv = (formProps, callback) => async dispatch => {
 
 export const updateSearch = (formProps, callback) => async dispatch => {
     console.log('ACTIONS.UPDATESEARCH', formProps);
-    let { category, sort, filter } = formProps;
-    if (category !== 'all') filter = 'cat';
-    const params = { category, sort, filter };
+    let { category, sort, filters, level_min=0, level_max=100 } = formProps;
+    if (category !== 'all') filters = ['cat'];
+    if (level_min || level_max) filters = [...filters, 'level'];
+    const params = { category, sort, filters, level_min, level_max };
     dispatch({ type: ACTIONS.INV_SEARCH_UPDATE, payload: params });
 };

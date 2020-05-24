@@ -13,7 +13,7 @@ const INITIAL_STATE = {
     errorMessage: '',
     search: {
         sort: 'alpha',
-        filter: 'all'
+        filters: ['all']
     }
 };
 
