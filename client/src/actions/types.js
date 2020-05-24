@@ -18,3 +18,4 @@ export const CHAR_ERROR = 'CHAR_ERROR';
 
 export const INV_LIST = 'INV_LIST';
 export const INV_ERROR = 'INV_ERROR';
+export const INV_SEARCH_UPDATE = 'INV_SEARCH_UPDATE';

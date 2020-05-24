@@ -47,7 +47,7 @@ export const getAllInv = (formProps, callback) => async dispatch => {
     const url = `${CONFIG.API_URL}/inv`;
     const headers = { token: localStorage.getItem('token') };
     const params = { accountName: localStorage.getItem('accountName') };
-    console.log('ACTIONS.INV_LIST', formProps);
+    console.log('ACTIONS.INV_LIST', params);
     try {
         const response = await axios.get(url, { headers, params });
         const { items, categories } = response.data;
@@ -99,4 +99,8 @@ export const getStashInv = (formProps, callback) => async dispatch => {
 
 export const updateSearch = (formProps, callback) => async dispatch => {
     console.log('ACTIONS.UPDATESEARCH', formProps);
+    let { category, sort, filter } = formProps;
+    if (category !== 'all') filter = 'cat';
+    const params = { category, sort, filter };
+    dispatch({ type: ACTIONS.INV_SEARCH_UPDATE, payload: params });
 };

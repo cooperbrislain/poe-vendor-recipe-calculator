@@ -10,7 +10,11 @@ import * as ACTIONS from './../actions/types';
 const INITIAL_STATE = {
     items: [],
     categories: {},
-    errorMessage: ''
+    errorMessage: '',
+    search: {
+        sort: 'alpha',
+        filter: 'all'
+    }
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -19,6 +23,8 @@ export default (state = INITIAL_STATE, action) => {
             return { ...state, items: action.payload.items, categories: action.payload.categories };
         case ACTIONS.CHAR_INV:
             return { ...state, items: action.payload.items, categories: action.payload.categories };
+        case ACTIONS.INV_SEARCH_UPDATE:
+            return { ...state, search: { ...state.search, ...action.payload } };
         default:
             return state;
     }
