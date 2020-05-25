@@ -105,6 +105,6 @@ export const updateSearch = (formProps, callback) => async dispatch => {
         filters = [...filters, 'string'];
     }
     if (level_min || level_max) filters = [...filters, 'level'];
-    const params = { category, sort, filters, level_min, level_max };
-    dispatch({ type: ACTIONS.INV_SEARCH_UPDATE, payload: params });
+    const params = { category, level_min, level_max, string };
+    dispatch({ type: ACTIONS.INV_SEARCH_UPDATE, payload: { filters, sort, params } });
 };

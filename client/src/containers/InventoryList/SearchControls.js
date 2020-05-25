@@ -48,7 +48,7 @@ class SearchControls extends Component {
                         <Field
                             name="string"
                             type="text"
-                            value={search.string}
+                            value={search.params.string}
                             component={ReduxFormControl}
                             onChange={this.updateSearchString}
                         />
@@ -60,7 +60,7 @@ class SearchControls extends Component {
                             name="category"
                             type="select"
                             as="select"
-                            value={search.category}
+                            value={search.params.category}
                             component={ReduxFormControl}
                         >
                             <option value='all'>All</option>
@@ -76,7 +76,7 @@ class SearchControls extends Component {
                         <Field
                             name="level_min"
                             type="range"
-                            value={search.level_min||0}
+                            value={search.params.level_min||0}
                             onChange={this.adjustLevelMin}
                             component={ReduxFormControl} />
                         <Form.Label>Level Max</Form.Label>

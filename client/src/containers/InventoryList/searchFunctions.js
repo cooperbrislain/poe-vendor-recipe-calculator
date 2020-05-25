@@ -11,6 +11,7 @@ export const searchFunctions = {
         string: (item, params) => item.name.search(params.string)
             || item.typeLine.search(params.string)
     },
-    combineFilters: (filters, params) => (item) => filters.reduce((pass, filter) => pass && searchFunctions.Filters[filter](item, params), true),
+    combineFilters: (filters, params) =>
+        (item) => filters.reduce((pass, filter) => pass && searchFunctions.Filters[filter](item, params), true),
     combineSorts: sorts => sorts,
 };

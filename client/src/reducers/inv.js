@@ -26,7 +26,7 @@ export default (state = INITIAL_STATE, action) => {
         case ACTIONS.CHAR_INV:
             return { ...state, items: action.payload.items, categories: action.payload.categories };
         case ACTIONS.INV_SEARCH_UPDATE:
-            return { ...state, search: { ...state.search, ...action.payload } };
+            return { ...state, search: { ...state.search, ...action.payload, params: { ...action.payload.params } } };
         default:
             return state;
     }
