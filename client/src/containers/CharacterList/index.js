@@ -2,20 +2,22 @@ import React, { Component } from 'react';
 import { compose } from "redux";
 import { connect } from "react-redux";
 import { getChars } from './../../actions';
-import { Container, Form, Row, Col, Button } from 'react-bootstrap';
+import { Container, Button, CardDeck, Card } from 'react-bootstrap';
+import CharacterCard from '../Character/CharacterCard';
 // import styles from './index.css';
 
 class CharacterList extends Component {
     componentDidMount = () => this.props.getChars();
+
     render() {
-        const { user } = this.props.state;
-        console.log('USER', user);
-        console.log('CHARS', user.chars);
-        return (
-            <ul>
-                { user.chars.map((char, i) => <li key={i}>{char.name}</li>) }
-                {/*{ user.chars.map((char, i) => <li key={i}>{char.name}</li>) }*/}
-            </ul>
+        const { chars } = this.props.state.chars;
+        console.log('CHARLIST', chars);
+        return (chars && chars.length?
+            <CardDeck>
+                { chars.map((char, i) => <CharacterCard key={i} char={char} />) }
+            </CardDeck>
+                :
+                'Loading'
         )
     }
 }

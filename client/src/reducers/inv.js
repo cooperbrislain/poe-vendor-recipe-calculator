@@ -10,6 +10,7 @@ import * as ACTIONS from './../actions/types';
 const INITIAL_STATE = {
     items: [],
     categories: {},
+    chars: [],
     errorMessage: '',
     search: {
         sort: 'alpha',
@@ -22,11 +23,16 @@ const INITIAL_STATE = {
 export default (state = INITIAL_STATE, action) => {
     switch(action.type) {
         case ACTIONS.INV_LIST:
-            return { ...state, items: action.payload.items, categories: action.payload.categories };
+            return { ...state,
+                items: action.payload.items,
+                chars: action.payload.chars,
+                categories: action.payload.categories
+            };
         case ACTIONS.CHAR_INV:
             return { ...state, items: action.payload.items, categories: action.payload.categories };
         case ACTIONS.INV_SEARCH_UPDATE:
-            return { ...state, search: { ...state.search, ...action.payload, params: { ...action.payload.params } } };
+            return { ...state,
+                search: { ...state.search, ...action.payload, params: { ...action.payload.params } } };
         default:
             return state;
     }

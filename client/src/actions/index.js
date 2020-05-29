@@ -15,16 +15,31 @@ export const signIn = (formProps, callback) => async dispatch => {
 };
 
 export const getChars = (formProps, callback) => async dispatch => {
-    const url = `${CONFIG.API_URL}/user/chars`;
+    const url = `${CONFIG.API_URL}/chars`;
     const headers = { token: localStorage.getItem('token') };
     const params = { accountName: localStorage.getItem('accountName') };
     console.log('ACTIONS.CHAR_LIST', formProps);
     try {
         const response = await axios.get(url, { headers, params });
-        dispatch({ type: ACTIONS.USER_CHARS, payload: response.data });
+        console.log(response.data);
+        dispatch({ type: ACTIONS.CHAR_LIST, payload: response.data });
         // callback();
     } catch(e) {
-        dispatch({ type: ACTIONS.USER_ERROR, payload: e });
+        dispatch({ type: ACTIONS.CHAR_ERROR, payload: e });
+    }
+};
+
+export const getChar = (formProps, callback) => async dispatch => {
+    const { charName } = formProps;
+    const url = `${CONFIG.API_URL}/char/${charName}`;
+    const headers = { token: localStorage.getItem('token') };
+    const params = { accountName: localStorage.getItem('accountName'), character: charName };
+    console.log('ACTIONS.GET_CHAR', formProps);
+    try {
+        const response = await axios.get(url, { headers, params });
+        dispatch({ type: ACTIONS.CHAR_DETAIL, payload: response.data })
+    } catch (e) {
+        dispatch({ type: ACTIONS.CHAR_ERROR, payload: e });
     }
 };
 
@@ -50,9 +65,9 @@ export const getAllInv = (formProps, callback) => async dispatch => {
     console.log('ACTIONS.INV_LIST', params);
     try {
         const response = await axios.get(url, { headers, params });
-        const { items, categories } = response.data;
+        const { items, categories, chars } = response.data;
         console.log('ALL INVENTORY', items);
-        dispatch({ type: ACTIONS.INV_LIST, payload: { items, categories } });
+        dispatch({ type: ACTIONS.INV_LIST, payload: { items, categories, chars } });
     } catch (e) {
         dispatch({ type: ACTIONS.CHAR_ERROR, payload: e });
     }
@@ -99,12 +114,12 @@ export const getStashInv = (formProps, callback) => async dispatch => {
 
 export const updateSearch = (formProps, callback) => async dispatch => {
     console.log('ACTIONS.UPDATESEARCH', formProps);
-    let { category, sort, filters, level_min=0, level_max=100, string } = formProps;
+    let { category, sort, filters, level_min=0, level_max=100, string, subcat=undefined, canuse } = formProps;
     if (category !== 'all') filters = ['cat'];
-    if (string) {
-        filters = [...filters, 'string'];
-    }
+    if (subcat) filters = [...filters, 'subcat']
+    if (string) filters = [...filters, 'string'];
     if (level_min || level_max) filters = [...filters, 'level'];
-    const params = { category, level_min, level_max, string };
+    if (canuse) filters = [...filters, 'canuse'];
+    const params = { category, level_min, level_max, string, subcat };
     dispatch({ type: ACTIONS.INV_SEARCH_UPDATE, payload: { filters, sort, params } });
 };

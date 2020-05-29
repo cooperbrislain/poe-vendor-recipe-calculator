@@ -14,6 +14,7 @@ export const STASH_ERROR = 'STASH_ERROR';
 
 export const CHAR_LIST = 'CHAR_LIST';
 export const CHAR_INV = 'CHAR_INV';
+export const CHAR_DETAIL = 'CHAR_DETAIL';
 export const CHAR_ERROR = 'CHAR_ERROR';
 
 export const INV_LIST = 'INV_LIST';

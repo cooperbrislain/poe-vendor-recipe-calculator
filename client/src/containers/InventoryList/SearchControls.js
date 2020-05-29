@@ -3,7 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import {getStashTab, signIn} from '../../actions';
 import { Jumbotron, Form, Button } from 'react-bootstrap';
-import { updateSearch } from '../../actions';
+import { updateSearch, getChars } from '../../actions';
 import { Field, reduxForm } from "redux-form";
 import ReduxFormControl from "../../components/ReduxFormControl";
 // import styles from './index.css';
@@ -33,7 +33,7 @@ class SearchControls extends Component {
 
     render() {
         const { inv, form } = this.props.state;
-        const { filterCategory, search } = inv;
+        const { filterCategory, search, chars } = inv;
         const { handleSubmit } = this.props;
         const fields = form.invsearch? form.invsearch.values || 0 : {};
 
@@ -70,6 +70,23 @@ class SearchControls extends Component {
                         </Field>
                     </Form.Group>
 
+                    {!fields.category ? '' :
+                        <Form.Group controlId="formSubCategory">
+                            <Form.Label>Subcategory</Form.Label>
+                            <Field
+                                name="subcat"
+                                type="select"
+                                as="select"
+                                value={search.params.subcat}
+                                component={ReduxFormControl}
+                            >
+                                {Object.keys(inv.categories[fields.category].subcats).map((subcat, i) =>
+                                    <option value={subcat} key={i}>{subcat}</option>
+                                )}
+                            </Field>
+                        </Form.Group>
+                    }
+
                     <Form.Group controlId="formLevelRange">
                         <Form.Label>Level Min</Form.Label>
                         <Form.Text>{fields.level_min}</Form.Text>
@@ -90,6 +107,24 @@ class SearchControls extends Component {
                     </Form.Group>
 
                     <Form.Group controlId="formCategory">
+                        <Form.Label>Can be used by</Form.Label>
+                        <Field
+                            name="charCanUse"
+                            type="select"
+                            as="select"
+                            value={search.params.canUse}
+                            component={ReduxFormControl}
+                        >
+                            <option value=''> </option>
+                            { chars.map((char, i) =>
+                                <option value={char} key={i}>{char}</option>
+                            ) }
+                        </Field>
+                    </Form.Group>
+
+                    <hr />
+
+                    <Form.Group controlId="formCategory">
                         <Form.Label>Sort</Form.Label>
                         <Field
                             name="sort"
@@ -104,6 +139,8 @@ class SearchControls extends Component {
                         </Field>
                     </Form.Group>
 
+                    <hr />
+
                     <Button type="submit" variant="primary">Search</Button>
                 </Form>
             </Jumbotron>
@@ -113,6 +150,6 @@ class SearchControls extends Component {
 
 const mapStateToProps = state => ({ state });
 export default compose(
-    connect(mapStateToProps, { updateSearch }),
+    connect(mapStateToProps, { updateSearch, getChars }),
     reduxForm({ form: 'invsearch' })
 )(SearchControls)

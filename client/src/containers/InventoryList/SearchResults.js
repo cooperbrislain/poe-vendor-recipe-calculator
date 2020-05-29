@@ -12,9 +12,20 @@ class SearchResults extends Component {
         const { search } = inv;
         const { Sorts, Filters, combineFilters } = searchFunctions;
         const invIdStrings = {
-            'MainInventory': 'Inventory',
+            'MainInventory': 'Carried',
             'Weapon': 'Wielded',
-            'Offhand2': 'Wielded',
+            'Offhand': 'Wielded',
+            'Weapon2': 'Wielded*',
+            'Offhand2': 'Wielded*',
+            'BodyArmour': 'Worn',
+            'Amulet': 'Worn',
+            'Ring': 'Worn',
+            'Ring2': 'Worn',
+            'Boots': 'Worn',
+            'Gloves': 'Worn',
+            'Helm': 'Worn',
+            'Flask': 'Equipped',
+            'Belt': 'Worn',
             'default': 'Equipped'
         };
         return (
@@ -39,12 +50,17 @@ class SearchResults extends Component {
                                 <td>{item.name} {item.typeLine}</td>
                                 <td>{item.category}</td>
                                 <td>{item.subcat}</td>
-                                <td>{item.ilvl}</td>
+                                <td>{item.level}</td>
                                 <td>
                                     {item.location.type === 'char' ?
                                         `${item.location.character} (${invIdStrings[item.inventoryId] || item.inventoryId})`
                                         : ''}
                                     {item.location.type === 'stash' ? `Stash: ${item.location.name}` : ''}
+                                    {item.location.type === 'socket' ?
+                                        item.location.desc
+                                        :
+                                        ''
+                                    }
                                 </td>
                             </tr>
                         ))
