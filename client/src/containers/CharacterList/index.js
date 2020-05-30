@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { compose } from "redux";
 import { connect } from "react-redux";
-import { getChars } from './../../actions';
+import { getChars, getSkillTree } from './../../actions';
 import { Container, Button, CardDeck, Card } from 'react-bootstrap';
 import CharacterCard from '../Character/CharacterCard';
 // import styles from './index.css';
 
 class CharacterList extends Component {
-    componentDidMount = () => this.props.getChars();
+    componentDidMount = () => this.props.getChars() && this.props.getSkillTree();
 
     render() {
         const { chars } = this.props.state.chars;
@@ -23,4 +23,4 @@ class CharacterList extends Component {
 }
 
 const mapStateToProps = state => ({ state });
-export default compose(connect(mapStateToProps, { getChars }))(CharacterList)
+export default compose(connect(mapStateToProps, { getChars, getSkillTree }))(CharacterList)

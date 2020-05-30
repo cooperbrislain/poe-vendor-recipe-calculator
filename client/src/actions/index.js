@@ -29,14 +29,14 @@ export const getChars = (formProps, callback) => async dispatch => {
     }
 };
 
-export const getChar = (formProps, callback) => async dispatch => {
-    const { charName } = formProps;
+export const getChar = (charName) => async dispatch => {
     const url = `${CONFIG.API_URL}/char/${charName}`;
     const headers = { token: localStorage.getItem('token') };
     const params = { accountName: localStorage.getItem('accountName'), character: charName };
-    console.log('ACTIONS.GET_CHAR', formProps);
+    console.log('ACTIONS.GET_CHAR', charName);
     try {
         const response = await axios.get(url, { headers, params });
+        console.log(response);
         dispatch({ type: ACTIONS.CHAR_DETAIL, payload: response.data })
     } catch (e) {
         dispatch({ type: ACTIONS.CHAR_ERROR, payload: e });
@@ -100,10 +100,10 @@ export const getStashTab = (formProps, callback) => async dispatch => {
 };
 
 export const getStashInv = (formProps, callback) => async dispatch => {
+    // console.log('ACTIONS.GETSTASHINV', formProps);
     const url = `${CONFIG.API_URL}/stash/inv`;
     const headers = { token: localStorage.getItem('token') };
     const params = { accountName: localStorage.getItem('accountName') };
-    console.log('ACTIONS.GETSTASHINV', formProps);
     try {
         const response = await axios.get(url, { headers, params });
         dispatch({ type: ACTIONS.STASH_INV, payload: response.data });
@@ -122,4 +122,19 @@ export const updateSearch = (formProps, callback) => async dispatch => {
     if (canuse) filters = [...filters, 'canuse'];
     const params = { category, level_min, level_max, string, subcat };
     dispatch({ type: ACTIONS.INV_SEARCH_UPDATE, payload: { filters, sort, params } });
+};
+
+export const getSkillTree = () => async dispatch => {
+    console.log('ACTIONS.GETSKILLTREE');
+    const url = `${CONFIG.API_URL}/skill-tree`;
+    const headers = { token: localStorage.getItem('token') };
+    const params = { accountName: localStorage.getItem('accountName') };
+    try {
+        const response = await axios.get(url, { headers, params });
+        console.log(response.data);
+        dispatch({ type: ACTIONS.CHAR_SKILL_TREE, payload: response.data });
+        // callback();
+    } catch(e) {
+        dispatch({ type: ACTIONS.CHAR_ERROR, payload: e });
+    }
 };

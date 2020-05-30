@@ -21,8 +21,9 @@ class CharacterDetail extends Component {
 
     render() {
         const { char } = this.props.state.chars;
+        console.log(this.props.match);
         console.log('CHAR DETAIL', char);
-        return (
+        return (!char? <>Please Wait</> :
             <>
                 <Card>
                     <Card.Header>

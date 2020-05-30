@@ -15,8 +15,9 @@ export const STASH_ERROR = 'STASH_ERROR';
 export const CHAR_LIST = 'CHAR_LIST';
 export const CHAR_INV = 'CHAR_INV';
 export const CHAR_DETAIL = 'CHAR_DETAIL';
+export const CHAR_SKILL_TREE = 'CHAR_SKILL_TREE';
 export const CHAR_ERROR = 'CHAR_ERROR';
 
 export const INV_LIST = 'INV_LIST';
-export const INV_ERROR = 'INV_ERROR';
 export const INV_SEARCH_UPDATE = 'INV_SEARCH_UPDATE';
+export const INV_ERROR = 'INV_ERROR';

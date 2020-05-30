@@ -3,6 +3,7 @@ import { compose } from "redux";
 import { connect } from "react-redux";
 import { getChar } from '../../actions';
 import { Card } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import LoginForm from "../../components/LoginForm";
 // import styles from './index.css';
 
@@ -26,7 +27,7 @@ class CharacterCard extends Component {
             <>
                 <Card>
                     <Card.Header>
-                        <h4>{char.name}</h4>
+                        <h4><Link to={url => `${url.pathname}/${char.name}`}>{char.name}</Link></h4>
                         <h5>Level {char.level} {char.class}</h5>
                     </Card.Header>
                     <Card.Body>
