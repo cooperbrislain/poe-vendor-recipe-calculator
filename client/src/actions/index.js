@@ -32,7 +32,7 @@ export const getChars = (formProps, callback) => async dispatch => {
 export const getChar = (charName) => async dispatch => {
     const url = `${CONFIG.API_URL}/char/${charName}`;
     const headers = { token: localStorage.getItem('token') };
-    const params = { accountName: localStorage.getItem('accountName'), character: charName };
+    const params = { accountName: localStorage.getItem('accountName'), charName };
     console.log('ACTIONS.GET_CHAR', charName);
     try {
         const response = await axios.get(url, { headers, params });
@@ -44,7 +44,7 @@ export const getChar = (charName) => async dispatch => {
 };
 
 export const getCharInv = (formProps, callback) => async dispatch => {
-    const url = `${CONFIG.API_URL}/char/${formProps.character}/inv`;
+    const url = `${CONFIG.API_URL}/char/${formProps.charName}/inv`;
     const headers = { token: localStorage.getItem('token') };
     const params = { accountName: localStorage.getItem('accountName') };
     console.log('ACTIONS.CHAR_INV', formProps);
@@ -131,7 +131,7 @@ export const getSkillTree = () => async dispatch => {
     const params = { accountName: localStorage.getItem('accountName') };
     try {
         const response = await axios.get(url, { headers, params });
-        console.log(response.data);
+        console.log('DATA', response.data);
         dispatch({ type: ACTIONS.CHAR_SKILL_TREE, payload: response.data });
         // callback();
     } catch(e) {

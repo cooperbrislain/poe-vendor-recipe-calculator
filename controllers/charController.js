@@ -3,11 +3,11 @@ const CONFIG = require('../config');
 
 module.exports = {
     getChar: async (req, res) => {
-        console.log('GET CHAR');
-        const { accountName, charName } = req.params;
+        console.log('GET CHAR', req.query);
+        const { accountName, charName } = req.query;
         const { token } = req.headers;
         const headers = { Cookie: `POESESSID=${token}` };
-        const params = { accountName, character: charName };
+        const params = { accountName, character: charName, reqData: true };
         let url, response;
         try {
             url = `${CONFIG.API_URL}/character-window/get-characters`;
@@ -15,8 +15,7 @@ module.exports = {
             const char = response.data.find(char => char.name === charName);
             url = `${CONFIG.API_URL}/character-window/get-passive-skills`;
             response = await axios.get(url, { headers, params });
-            console.log('PASSIVE SKILL TREE', response.data);
-            char.skills = response.data;
+            char.skills = JSON.parse(response.data.trim())
             url = `${CONFIG.API_URL}/character-window/get-items`;
             response = await axios.get(url, { headers, params });
             char.inv = response.data.items;
@@ -58,10 +57,9 @@ module.exports = {
         try {
             const url = `${CONFIG.API_URL}/character-window/get-passive-skills`;
             const headers = { Cookie: `POESESSID=${token}` };
-            const params = { accountName, character: charName, reqData: false };
+            const params = { accountName, character: charName, reqData: true };
             const response = await axios.get(url, { headers, params });
             const { skillTreeData } = JSON.parse(response.data.trim());
-            console.log('SKILL TREE DATA', skillTreeData);
             await res.json(skillTreeData);
         } catch (e) {
             await res.json(e);

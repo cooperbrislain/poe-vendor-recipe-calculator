@@ -7,7 +7,7 @@ import CharacterCard from '../Character/CharacterCard';
 // import styles from './index.css';
 
 class CharacterList extends Component {
-    componentDidMount = () => this.props.getChars() && this.props.getSkillTree();
+    componentDidMount = () => this.props.getChars();
 
     render() {
         const { chars } = this.props.state.chars;
